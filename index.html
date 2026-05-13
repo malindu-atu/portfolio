@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Malindu Atukorala — CS Undergraduate & Software Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:ital,wght@0,300;0,400;0,600;1,300&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="css/styles.css"/>
+</head>
+<body>
+<!-- LOADER -->
+<div id="loader">
+  <div class="ld-logo">MA.</div>
+  <div class="ld-msg" id="ld-msg">initializing...</div>
+  <div class="ld-track"><div class="ld-fill" id="ld-fill"></div></div>
+  <div class="ld-pct" id="ld-pct">0%</div>
+</div>
+
+<!-- CURSOR -->
+<div id="cursor"></div><div id="cursor-ring"></div>
+
+<!-- PROGRESS BAR -->
+<div id="progress-bar"></div>
+
+<!-- BG -->
+<canvas id="bg-canvas"></canvas>
+<div class="grid-bg"></div>
+
+<!-- ══════════════ CLI TERMINAL ══════════════ -->
+<div id="term-overlay" role="dialog" aria-label="Portfolio Terminal">
+  <div class="term-win" id="term-win">
+    <div class="term-bar" id="term-bar">
+      <div class="tdots"><span class="tdot r"></span><span class="tdot y"></span><span class="tdot g"></span></div>
+      <span class="ttitle">malindu@portfolio — bash — 80×24</span>
+      <button class="term-close-btn" id="term-close">⌘W close</button>
+    </div>
+    <div class="term-tabs">
+      <button class="term-tab active">bash</button>
+      <button class="term-tab" onclick="runCmd('about')">about</button>
+      <button class="term-tab" onclick="runCmd('projects')">projects</button>
+      <button class="term-tab" onclick="runCmd('contact')">contact</button>
+    </div>
+    <div class="term-out" id="term-out"></div>
+    <div class="term-in-row">
+      <span class="term-in-icon">❯</span>
+      <input id="term-input" type="text" autocomplete="off" spellcheck="false" placeholder="type 'help' to get started…" aria-label="Terminal input"/>
+      <span class="term-hint">tab · ↑↓ · ⌘K</span>
+    </div>
+    <div id="term-resize"></div>
+  </div>
+</div>
+
+<!-- THEME SWITCHER -->
+<div id="theme-panel">
+  <span id="theme-label">THEME</span>
+  <button class="theme-swatch active" data-t="default" data-tip="Default"></button>
+  <button class="theme-swatch" data-t="cyber"   data-tip="Cyber"></button>
+  <button class="theme-swatch" data-t="amber"   data-tip="Amber"></button>
+  <button class="theme-swatch" data-t="ocean"   data-tip="Ocean"></button>
+  <button class="theme-swatch" data-t="green"   data-tip="Matrix"></button>
+</div>
+
+<!-- SECTION DOTS -->
+<nav id="sec-dots">
+  <button class="sec-dot" data-sec="hero"         data-label="Home"></button>
+  <button class="sec-dot" data-sec="about"        data-label="About"></button>
+  <button class="sec-dot" data-sec="skills"       data-label="Skills"></button>
+  <button class="sec-dot" data-sec="projects"     data-label="Projects"></button>
+  <button class="sec-dot" data-sec="experience"   data-label="Experience"></button>
+  <button class="sec-dot" data-sec="achievements" data-label="Achievements"></button>
+  <button class="sec-dot" data-sec="contact"      data-label="Contact"></button>
+</nav>
+
+<!-- COMMAND PALETTE (Ctrl+K) -->
+<div id="palette-overlay" role="dialog" aria-label="Command Palette">
+  <div class="palette-box">
+    <div class="palette-search-row">
+      <span class="palette-icon">⌘</span>
+      <input id="palette-input" type="text" placeholder="Search commands, sections…" autocomplete="off" spellcheck="false"/>
+      <span class="palette-hint">ESC to close</span>
+    </div>
+    <div class="palette-results" id="palette-results"></div>
+    <div class="palette-footer">
+      <span>↑↓ navigate</span>
+      <span>↵ select</span>
+      <span>⌘K toggle</span>
+    </div>
+  </div>
+</div>
+
+<!-- FAB -->
+<button id="term-fab" title="Open Terminal (Ctrl+`)">
+  <div class="fab-dot"></div>
+  <span>terminal</span><span style="font-size:.9rem">_</span>
+</button>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">MA<span style="color:var(--text)">.</span></a>
+  <ul class="nav-links">
+    <li><a href="#about"        data-n="01.">About</a></li>
+    <li><a href="#skills"       data-n="02.">Skills</a></li>
+    <li><a href="#projects"     data-n="03.">Projects</a></li>
+    <li><a href="#experience"   data-n="04.">Experience</a></li>
+    <li><a href="#achievements" data-n="05.">Achievements</a></li>
+    <li><a href="#contact"      data-n="06.">Contact</a></li>
+  </ul>
+  <button class="nav-term-btn" id="nav-term-btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:.3rem"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>terminal</button>
+</nav>
+
+<div class="wrapper">
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="blob blob-1"></div><div class="blob blob-2"></div>
+    <div class="hero-deco">
+      <div class="deco-ring"><div class="deco-dot"></div></div>
+      <div class="deco-ring"><div class="deco-dot"></div></div>
+      <div class="deco-ring"><div class="deco-dot"></div></div>
+      <div class="deco-core"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+    </div>
+    <p class="hero-eyebrow">Hi, my name is</p>
+    <h1 class="hero-name glitch" data-t="Malindu Atukorala."><span class="grad">Malindu Atukorala.</span></h1>
+    <h2 class="hero-sub" id="typed-el"><span class="t-cur">|</span></h2>
+    <p class="hero-desc">CS Undergraduate at <strong>University of Westminster</strong> &amp; Software Engineer. Building impactful web apps with AI, modern frontend, and scalable backends — from Colombo, Sri Lanka</p>
+    <div class="badge-row">
+      <span class="badge">React</span><span class="badge">Java</span><span class="badge">Python</span><span class="badge">FastAPI</span><span class="badge">Supabase</span>
+    </div>
+    <div class="hero-ctas">
+      <a href="#projects" class="btn btn-p magnetic">View My Work →</a>
+      <a href="#contact"  class="btn btn-o magnetic">Get In Touch</a>
+      <button class="btn btn-o2 magnetic" id="hero-term-btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:.3rem"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>Terminal</button>
+    </div>
+
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="sec-lbl rv">01. About Me</div>
+    <div class="about-grid">
+      <div class="rv-l">
+        <h2 class="sec-title" style="margin-bottom:1.5rem">Motivated to build<br/><span style="color:var(--accent)">impactful solutions</span> with tech.</h2>
+        <div class="about-text">
+          <p>Hey! I'm <strong>Malindu Atukorala</strong>, a Computer Science undergraduate at the <strong>University of Westminster</strong>, based in Colombo, Sri Lanka.</p>
+          <p>I have a strategic mindset and a proven ability to develop and deliver high-quality solutions efficiently. I'm dedicated to teamwork, innovation, and problem-solving — and committed to continuous learning.</p>
+          <p>Beyond coding, I'm a former <strong>Head Prefect</strong>, national football player who represented Sri Lanka in U-15 &amp; U-16 championships, and an award-winning student. Check out my <a href="https://github.com/malindu-atu" target="_blank">GitHub</a> or connect on <a href="https://linkedin.com/in/malindu-atukorala" target="_blank">LinkedIn</a>.</p>
+        </div>
+        <div class="stats-row">
+          <div><span class="sn" data-target="6">0</span><span class="sl">PROJECTS BUILT</span></div>
+          <div><span class="sn" data-target="1">0</span><span class="sl">YEARS EXPERIENCE</span></div>
+          <div><span class="sn" data-target="10">0</span><span class="sl">TECHNOLOGIES</span></div>
+        </div>
+      </div>
+      <div class="about-img-wrap rv-r">
+        <div class="about-img-box" style="overflow:hidden;padding:0;background:transparent;">
+          <img src="assets/ProfilePic.jpeg" alt="Malindu Atukorala" style="width:100%;height:100%;object-fit:cover;object-position:center 15%;display:block;border-radius:12px;"/>
+          <div style="position:absolute;inset:0;border-radius:12px;box-shadow:inset 0 0 0 1.5px rgba(100,255,218,0.35);pointer-events:none;"></div>
+        </div>
+        <div class="img-frame"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="sec-lbl rv">02. Skills</div>
+    <h2 class="sec-title rv">Technologies I work with</h2>
+    <div class="skills-grid">
+      <div class="skill-card rv-s">
+        <div class="skill-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div><h3>Frontend</h3>
+        <div class="bar-list">
+          <div><div class="bar-hdr"><span>Next.js / React.js</span><span>88%</span></div><div class="bar-track"><div class="bar-fill" data-w="88"></div></div></div>
+          <div><div class="bar-hdr"><span>JavaScript / TypeScript</span><span>85%</span></div><div class="bar-track"><div class="bar-fill" data-w="85"></div></div></div>
+          <div><div class="bar-hdr"><span>Framer Motion / Webflow</span><span>90%</span></div><div class="bar-track"><div class="bar-fill" data-w="90"></div></div></div>
+        </div>
+        <div class="tags"><span class="tag">Next.js</span><span class="tag">React.js</span><span class="tag">JavaScript</span><span class="tag">Framer Motion</span><span class="tag">Webflow</span></div>
+      </div>
+      <div class="skill-card rv-s">
+        <div class="skill-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--a2)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div><h3>Backend &amp; AI / ML</h3>
+        <div class="bar-list">
+          <div><div class="bar-hdr"><span>Python / FastAPI</span><span>85%</span></div><div class="bar-track"><div class="bar-fill" data-w="85"></div></div></div>
+          <div><div class="bar-hdr"><span>Java</span><span>75%</span></div><div class="bar-track"><div class="bar-fill" data-w="75"></div></div></div>
+          <div><div class="bar-hdr"><span>Hybrid RAG</span><span>78%</span></div><div class="bar-track"><div class="bar-fill" data-w="78"></div></div></div>
+        </div>
+        <div class="tags"><span class="tag p">Python</span><span class="tag p">FastAPI</span><span class="tag p">Java</span><span class="tag p">RAG</span></div>
+      </div>
+      <div class="skill-card rv-s">
+        <div class="skill-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--a3)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></div><h3>Databases &amp; Platforms</h3>
+        <div class="bar-list">
+          <div><div class="bar-hdr"><span>PostgreSQL / Supabase</span><span>83%</span></div><div class="bar-track"><div class="bar-fill" data-w="83"></div></div></div>
+          <div><div class="bar-hdr"><span>Qdrant (Vector DB)</span><span>75%</span></div><div class="bar-track"><div class="bar-fill" data-w="75"></div></div></div>
+          <div><div class="bar-hdr"><span>Neo4j (Graph DB)</span><span>70%</span></div><div class="bar-track"><div class="bar-fill" data-w="70"></div></div></div>
+        </div>
+        <div class="tags"><span class="tag k">PostgreSQL</span><span class="tag k">Supabase</span><span class="tag k">Qdrant</span><span class="tag k">Neo4j</span><span class="tag k">Vercel</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="sec-lbl rv">03. Projects</div>
+    <h2 class="sec-title rv">Some things I've built</h2>
+    <div class="proj-grid">
+
+      <!-- MapMyZ -->
+      <div class="proj-card rv">
+        <div class="proj-head">
+          <div class="proj-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg></div>
+          <div class="proj-links">
+            <a href="https://github.com/malindu-atu/MapMyZ" target="_blank" class="plink" title="GitHub"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg></a>
+          </div>
+        </div>
+        <h3>MapMyZ — Interactive Z-score visualizer</h3>
+        <p>An interactive A/L results visualizer for Sri Lankan students, rebuilt and refined as a data-driven eligibility tool. Displays Z-score cutoffs by district and course across multiple exam years, with a color-coded heatmap, per-university qualification checking, and historical trend charts — built for students navigating university admissions in Sri Lanka.</p>
+        <div class="tags"><span class="tag">React</span><span class="tag">TypeScript</span><span class="tag p">Leaflet / Maps API</span><span class="tag k">Geolocation</span></div>
+      </div>
+
+      <!-- LKR Rates v2 -->
+      <div class="proj-card rv">
+        <div class="proj-head">
+          <div class="proj-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--a2)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+          <div class="proj-links">
+            <a href="https://github.com/malindu-atu/lkr-rates-v2" target="_blank" class="plink" title="GitHub"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg></a>
+          </div>
+        </div>
+        <h3>LKR Rates v2 — Sri Lankan Exchange Rate Tracker</h3>
+        <p>A real-time Sri Lankan Rupee (LKR) exchange rate tracker rebuilt from the ground up. Displays live currency conversion rates against major currencies with a clean dashboard UI, historical rate trends, and fast data fetching — built for Sri Lankan users monitoring forex.</p>
+        <div class="tags"><span class="tag">React</span><span class="tag">TypeScript</span><span class="tag p">Exchange Rate API</span><span class="tag k">Real-time Data</span></div>
+      </div>
+
+      <div class="proj-card rv">
+        <div class="proj-head"><div class="proj-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div><div class="proj-links"><a href="https://github.com/malindu-atu" class="plink" title="GitHub"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg></a><a href="#" class="plink" title="Live"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div>
+        <h3>Nyaya — Law Learning Platform</h3>
+        <p>Legal education platform for Sri Lankan constitutional law featuring an interactive quiz system and AI-powered Citation Manager. Hybrid RAG pipeline answers queries from 9,500+ legal document chunks with source references.</p>
+        <div class="tags"><span class="tag">Next.js</span><span class="tag">TypeScript</span><span class="tag p">FastAPI</span><span class="tag p">Groq</span><span class="tag k">Qdrant</span><span class="tag k">Neo4j</span><span class="tag k">Supabase</span></div>
+      </div>
+
+      <div class="proj-card rv">
+        <div class="proj-head"><div class="proj-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--a2)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><div class="proj-links"><a href="https://github.com/malindu-atu" class="plink" title="GitHub"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg></a><a href="#" class="plink" title="Live"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div>
+        <h3>FBL Soccer Academy Platform</h3>
+        <p>Football academy management platform digitising operations across multiple training locations in Sri Lanka. Features AI-powered student enrollment via Groq's Llama 4 Scout, location-based scheduling, attendance tracking, and payment management.</p>
+        <div class="tags"><span class="tag">React</span><span class="tag p">FastAPI</span><span class="tag k">Supabase</span><span class="tag k">PostgreSQL</span></div>
+      </div>
+
+      <div class="proj-card rv">
+        <div class="proj-head"><div class="proj-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--a3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div><div class="proj-links"><a href="#" class="plink" title="Live"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div>
+        <h3>Cherry Global Website</h3>
+        <p>Venture-backed supply chain ecosystem website showcasing AI-driven automation, strategic advisory, and digital transformation services for global logistics networks.</p>
+        <div class="tags"><span class="tag">Webflow</span><span class="tag p">UI/UX Design</span><span class="tag k">Supply Chain</span></div>
+      </div>
+
+      <div class="proj-card rv">
+        <div class="proj-head"><div class="proj-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--a4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div><div class="proj-links"><a href="#" class="plink" title="Live"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div></div>
+        <h3>ConexusOne Website</h3>
+        <p>Unified, AI-powered logistics platform facilitating real-time supply chain visibility, automated freight management, and sustainability tracking — developed in Webflow.</p>
+        <div class="tags"><span class="tag">Webflow</span><span class="tag p">UI/UX Design</span><span class="tag k">Logistics</span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="sec-lbl rv">04. Experience &amp; Education</div>
+    <h2 class="sec-title rv">My journey so far</h2>
+    <div class="exp-wrap">
+
+      <!-- Professional Experience -->
+      <div class="exp-row rv">
+        <div class="exp-date">Apr 2024 — Oct 2024</div>
+        <div class="exp-spine">
+          <div class="exp-dot exp-dot--work"></div>
+          <div class="exp-vline"></div>
+        </div>
+        <div class="exp-box">
+          <div class="exp-type-badge exp-type-badge--work">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+            Work Experience
+          </div>
+          <h3>Trainee Software Engineer</h3>
+          <div class="co">▸ Inivos Technology (Pvt) Ltd</div>
+          <p>Revamped the company's main website and executed end-to-end UI designs for multiple internal and external projects.</p>
+        </div>
+      </div>
+
+      <!-- BSc -->
+      <div class="exp-row rv" style="transition-delay:.1s">
+        <div class="exp-date">Sep 2024 — Present</div>
+        <div class="exp-spine">
+          <div class="exp-dot"></div>
+          <div class="exp-vline"></div>
+        </div>
+        <div class="exp-box">
+          <div class="exp-type-badge">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.66 4 3 6 3s6-1.34 6-3v-5"/></svg>
+            Education
+          </div>
+          <h3>BSc (Hons) Computer Science</h3>
+          <div class="co">▸ University of Westminster</div>
+          <p><strong style="color:var(--text);font-weight:600">2nd Year:</strong> Object Oriented Programming · Database Systems · Software Development Group Project · Client-Server Architectures · Machine Learning and Data Mining · Algorithms</p>
+          <p style="margin-top:.6rem"><strong style="color:var(--text);font-weight:600">1st Year:</strong> Software Development I &amp; II · Mathematics Computing · Trends in Computer Science · Computer Systems Fundamentals · Web Design and Development</p>
+        </div>
+      </div>
+
+      <!-- GCE A/L -->
+      <div class="exp-row rv" style="transition-delay:.2s">
+        <div class="exp-date">2023</div>
+        <div class="exp-spine">
+          <div class="exp-dot"></div>
+          <div class="exp-vline"></div>
+        </div>
+        <div class="exp-box">
+          <div class="exp-type-badge">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.66 4 3 6 3s6-1.34 6-3v-5"/></svg>
+            Education
+          </div>
+          <h3>GCE Advanced Level Examination</h3>
+          <div class="co">▸ St. Peter's College Colombo 04</div>
+          <p>B and 2Cs — Mathematics stream.</p>
+        </div>
+      </div>
+
+      <!-- GCE O/L -->
+      <div class="exp-row rv" style="transition-delay:.3s">
+        <div class="exp-date">2021</div>
+        <div class="exp-spine">
+          <div class="exp-dot"></div>
+          <div class="exp-vline"></div>
+        </div>
+        <div class="exp-box">
+          <div class="exp-type-badge">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.66 4 3 6 3s6-1.34 6-3v-5"/></svg>
+            Education
+          </div>
+          <h3>GCE Ordinary Level Examination</h3>
+          <div class="co">▸ St. Peter's College Colombo 04</div>
+          <p>9As</p>
+        </div>
+      </div>
+
+      <!-- Diploma ICT -->
+      <div class="exp-row rv" style="transition-delay:.4s">
+        <div class="exp-date">2020</div>
+        <div class="exp-spine">
+          <div class="exp-dot"></div>
+          <div class="exp-vline"></div>
+        </div>
+        <div class="exp-box">
+          <div class="exp-type-badge">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.66 4 3 6 3s6-1.34 6-3v-5"/></svg>
+            Education
+          </div>
+          <h3>Diploma in Information and Communication Technology</h3>
+          <div class="co">▸ University of ICBT</div>
+        </div>
+      </div>
+
+      <!-- Diploma Speech -->
+      <div class="exp-row rv" style="transition-delay:.5s">
+        <div class="exp-date">2019</div>
+        <div class="exp-spine">
+          <div class="exp-dot"></div>
+          <div class="exp-vline"></div>
+        </div>
+        <div class="exp-box">
+          <div class="exp-type-badge">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.66 4 3 6 3s6-1.34 6-3v-5"/></svg>
+            Education
+          </div>
+          <h3>Diploma in Speech and Drama</h3>
+          <div class="co">▸ Institute of New Era Academy London</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ACHIEVEMENTS -->
+  <section id="achievements">
+    <div class="sec-lbl rv">05. Achievements</div>
+    <h2 class="sec-title rv">Awards &amp; Recognition</h2>
+    <div class="ach-grid">
+
+      <div class="ach-card rv-s">
+        <div class="ach-header">
+          <div class="ach-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg></div>
+          <div class="ach-meta">
+            <div class="ach-title">Head Prefect</div>
+            <div class="ach-org">▸ St. Peter's College Colombo 04</div>
+          </div>
+        </div>
+        <p class="ach-desc">Elected Head Prefect for the year 2023/24 — the highest student leadership position at the school, responsible for representing the student body and leading prefectorial duties.</p>
+        <span class="ach-badge">Leadership · 2023/24</span>
+      </div>
+
+      <div class="ach-card rv-s">
+        <div class="ach-header">
+          <div class="ach-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--a4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+          <div class="ach-meta">
+            <div class="ach-title">Peterite Gold Award</div>
+            <div class="ach-org">▸ St. Peter's College Colombo 04</div>
+          </div>
+        </div>
+        <p class="ach-desc">Prestigious award granted for academic and overall excellence at St. Peter's College — recognising outstanding achievement across academics, leadership, and co-curricular contributions.</p>
+        <span class="ach-badge p">Academic Excellence</span>
+      </div>
+
+      <div class="ach-card rv-s">
+        <div class="ach-header">
+          <div class="ach-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--a2)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+          <div class="ach-meta">
+            <div class="ach-title">National Football — SAFF Championship</div>
+            <div class="ach-org">▸ Sri Lanka U-15 · India, 2019</div>
+          </div>
+        </div>
+        <p class="ach-desc">Represented Sri Lanka in the U-15 SAFF Championship held in India — competing at international level as part of the national youth football team.</p>
+        <span class="ach-badge k">International · Football</span>
+      </div>
+
+      <div class="ach-card rv-s">
+        <div class="ach-header">
+          <div class="ach-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--a2)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+          <div class="ach-meta">
+            <div class="ach-title">National Football — AFC Championship</div>
+            <div class="ach-org">▸ Sri Lanka U-16 · Jordan, 2019</div>
+          </div>
+        </div>
+        <p class="ach-desc">Represented Sri Lanka in the U-16 AFC Championship held in Jordan — one of the highest-level youth football competitions in Asia, showcasing national talent on the continental stage.</p>
+        <span class="ach-badge k">International · Football</span>
+      </div>
+
+      <div class="ach-card rv-s">
+        <div class="ach-header">
+          <div class="ach-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--a3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg></div>
+          <div class="ach-meta">
+            <div class="ach-title">College Football Captain &amp; Top Sportsman</div>
+            <div class="ach-org">▸ St. Peter's College Colombo 04</div>
+          </div>
+        </div>
+        <p class="ach-desc">Captain of the U-20 Soccer Team. Named Most Outstanding Sportsman for 2019. Led the team to All-Island 1st Runners-up at the U-20 Papare Soccer Tournament.</p>
+        <span class="ach-badge">Sports · Captain · 2019</span>
+      </div>
+
+      <div class="ach-card rv-s">
+        <div class="ach-header">
+          <div class="ach-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg></div>
+          <div class="ach-meta">
+            <div class="ach-title">Head of Compeering — Peterite Media Unit</div>
+            <div class="ach-org">▸ St. Peter's College · 2022/23</div>
+          </div>
+        </div>
+        <p class="ach-desc">Led the compeering division of the Peterite Media Unit for two consecutive years, hosting major school events and developing communication &amp; public speaking skills beyond the classroom.</p>
+        <span class="ach-badge p">Communication · Media</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="sec-lbl rv" style="justify-content:center">06. What's Next?</div>
+    <h2 class="sec-title rv" style="font-size:clamp(2rem,5vw,3.5rem)">Get In Touch</h2>
+    <p class="contact-sub rv">I'm always open to new opportunities, collaborations, or just a good conversation about tech. Whether you have a project in mind or want to connect — feel free to reach out!</p>
+    <div class="rv">
+      <a href="mailto:dominic.malindu@gmail.com" class="contact-email">dominic.malindu@gmail.com</a><br/>
+      <a href="mailto:dominic.malindu@gmail.com" class="btn btn-p magnetic" style="margin-top:1rem">Say Hello &rarr;</a>
+    </div>
+    <div class="socials rv">
+      <a href="https://github.com/malindu-atu" target="_blank" class="soc-lnk" title="GitHub">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+      </a>
+      <a href="https://linkedin.com/in/malindu-atukorala" target="_blank" class="soc-lnk" title="LinkedIn">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      </a>
+      <a href="mailto:dominic.malindu@gmail.com" class="soc-lnk" title="Email">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M1.5 8.67v8.58a3 3 0 003 3h15a3 3 0 003-3V8.67l-8.928 5.493a3 3 0 01-3.144 0L1.5 8.67z"/><path d="M22.5 6.908V6.75a3 3 0 00-3-3h-15a3 3 0 00-3 3v.158l9.714 5.978a1.5 1.5 0 001.572 0L22.5 6.908z"/></svg>
+      </a>
+      <a href="tel:+94776705206" class="soc-lnk" title="Phone">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path fill-rule="evenodd" d="M1.5 4.5a3 3 0 013-3h1.372c.86 0 1.61.586 1.819 1.42l1.105 4.423a1.875 1.875 0 01-.694 1.955l-1.293.97c-.135.101-.164.249-.126.352a11.285 11.285 0 006.697 6.697c.103.038.25.009.352-.126l.97-1.293a1.875 1.875 0 011.955-.694l4.423 1.105c.834.209 1.42.959 1.42 1.82V19.5a3 3 0 01-3 3h-2.25C8.552 22.5 1.5 15.448 1.5 6.75V4.5z" clip-rule="evenodd"/></svg>
+      </a>
+    </div>
+  </section>
+</div>
+
+<footer><span>Built</span> by Malindu Atukorala &nbsp;&middot;&nbsp;  <span style="cursor:none;text-decoration:underline;text-underline-offset:3px" onclick="openTerm()">open terminal</span></footer>
+<script src="js/main.js"></script>
+</body>
+</html>
