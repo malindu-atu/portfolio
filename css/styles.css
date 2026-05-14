@@ -268,7 +268,7 @@ section{padding:8rem 5vw;max-width:1180px;margin:0 auto}
 
 /* FAB */
 #term-fab{position:fixed;bottom:2.2rem;right:2.2rem;z-index:4000;display:flex;align-items:center;gap:.55rem;padding:.75rem 1.3rem;border-radius:40px;background:var(--card);border:1px solid var(--accent);color:var(--accent);font-family:var(--fm);font-size:.73rem;cursor:none;letter-spacing:.08em;box-shadow:0 0 32px var(--glow);transition:transform .25s,box-shadow .25s,background .25s;animation:fabFloat 3.5s ease-in-out infinite}
-#term-fab:hover{background:rgba(100,255,218,.1);transform:translateY(-5px) scale(1.06);box-shadow:0 0 55px var(--glow),0 14px 32px rgba(0,0,0,.4)}
+#term-fab:hover{background:rgba(100,255,218,.1);transform:translateY(-4px) scale(1.04);box-shadow:0 0 55px var(--glow),0 14px 32px rgba(0,0,0,.4);animation-play-state:paused}
 .fab-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:fabDot 1.2s ease-in-out infinite}
 @keyframes fabFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
 @keyframes fabDot{0%,100%{opacity:1;box-shadow:0 0 6px var(--accent)}50%{opacity:.3;box-shadow:none}}
