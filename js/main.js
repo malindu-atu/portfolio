@@ -191,12 +191,12 @@ const overlay=$('#term-overlay'), termOut=$('#term-out'), termIn=$('#term-input'
 let hist=[],histIdx=-1,booted=false;
 
 /* ── command definitions ── */
-const ASCII_LOGO=
-`  __  __    _      ___ _   _ ____  _   _
- |  \\/  |  / \\    |_ _| \\ | |  _ \\| | | |
- | |\\/| | / _ \\    | ||  \\| | | | | | | |
- | |  | |/ ___ \\   | || |\\  | |_| | |_| |
- |_|  |_/_/   \\_\\ |___|_| \\_|____/ \\___/`;
+ const ASCII_LOGO =
+`  __  __     _     _      ___  _   _  ____   _   _
+ |  \\/  |   / \\   | |    |_ _|| \\ | ||  _ \\ | | | |
+ | |\\/| |  / _ \\  | |     | | |  \\| || | | || | | |
+ | |  | | / ___ \\ | |___  | | | |\\  || |_| || |_| |
+ |_|  |_|/_/   \\_\\|_____||___||_| \\_||____/  \\___/`;
 
 const CMDS={
   help:()=>[
@@ -698,10 +698,10 @@ $$('.proj-card,.skill-card').forEach(card=>{
 Object.assign(CMDS,{
   ls:()=>CMDS.projects(),
   cat:()=>CMDS.about(),
-  pwd:()=>[{T:'blank'},{T:'ok',v:'/home/malay/portfolio'},{T:'blank'}],
+  pwd:()=>[{T:'blank'},{T:'ok',v:'/home/malindu/portfolio'},{T:'blank'}],
   whoami:()=>CMDS.about(),
   date:()=>[{T:'blank'},{T:'ok',v:new Date().toUTCString()},{T:'blank'}],
-  uname:()=>[{T:'blank'},{T:'out',v:'Portfolio OS v2.0.0 — Malay Patra · Full Stack Developer'},{T:'blank'}],
+  uname:()=>[{T:'blank'},{T:'out',v:'Portfolio OS v2.0.0 — Malindu Atukorala · Software Engineer'},{T:'blank'}],
   uptime:()=>[{T:'blank'},{T:'out',v:`Portfolio has been running since ${new Date(Date.now()-Math.random()*1e10).toLocaleDateString()}`},{T:'blank'}],
   ping:()=>[
     {T:'blank'},{T:'ok',v:'PING malindu@portfolio.dev — 56 bytes of data'},
