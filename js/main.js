@@ -240,7 +240,7 @@ const CMDS={
     {T:'kv',k:'Frontend',    v:'Next.js · React.js · JavaScript · Framer Motion · Webflow'},
     {T:'kv',k:'Backend',     v:'FastAPI · Python'},
     {T:'kv',k:'Database',    v:'PostgreSQL · Supabase'},
-    {T:'kv',k:'AI / ML',     v:'Qdrant (Vector DB) · Neo4j (Graph DB) · Groq · RAG Pipelines'},
+    {T:'kv',k:'AI / ML',     v:'Qdrant (Vector DB) · Neo4j (Graph DB) · RAG Pipelines'},
     {T:'kv',k:'Platforms',   v:'GitHub · Vercel · Render · Railway'},
     {T:'kv',k:'Soft Skills', v:'Communication · Teamwork · Leadership · Time Management'},
     {T:'blank'},
@@ -254,8 +254,9 @@ const CMDS={
   projects:()=>[
     {T:'blank'},{T:'info',v:'$ ls ./projects'},{T:'blank'},
     {T:'kv',k:'[1] MapMyZ',        v:'React · TypeScript · Leaflet / Maps API · Geolocation'},
-    {T:'out',v:'Interactive map explorer — pin, annotate & discover places of interest.'},
-    {T:'out',v:'Smooth map interactions · geolocation · responsive UI.'},
+    {T:'out',v:'Interactive A/L results visualizer for Sri Lankan university admissions.'},
+    {T:'out',v:'Z-score cutoffs by district & course · color-coded heatmap · per-university eligibility checking.'},
+    {T:'out',v:'Historical trend charts · multi-year exam data · responsive UI.'},
     {T:'out',v:'github.com/malindu-atu/MapMyZ'},
     {T:'blank'},
     {T:'kv',k:'[2] LKR Rates v2',  v:'React · TypeScript · Exchange Rate API · Real-time Data'},
@@ -296,7 +297,7 @@ const CMDS={
     {T:'out',v:'B and 2Cs (Mathematics stream)'},
     {T:'blank'},
     {T:'kv',k:'2021', v:'GCE O/Levels — St. Peter\'s College Colombo 04'},
-    {T:'out',v:'9As — outstanding academic performance'},
+    {T:'out',v:'9As'},
     {T:'blank'},
     {T:'kv',k:'2020', v:'Diploma in ICT — University of ICBT'},
     {T:'kv',k:'2019', v:'Diploma in Speech & Drama — New Era Academy London'},
@@ -313,7 +314,6 @@ const CMDS={
     {T:'kv',k:'National',    v:'Sri Lanka U-16 AFC Championship — Jordan 2019'},
     {T:'kv',k:'Captain',     v:'U-20 Soccer Team — St. Peter\'s College'},
     {T:'kv',k:'Award',       v:'Most Outstanding Sportsman 2019'},
-    {T:'kv',k:'All-Island',  v:'1st Runners-up — U-20 Papare Soccer Tournament'},
     {T:'blank'},
   ],
   contact:()=>[
@@ -333,18 +333,22 @@ const CMDS={
     {T:'kv',k:'Phone',    v:'+94 776705206'},
     {T:'blank'},
   ],
-  resume:()=>[
-    {T:'blank'},{T:'ok',v:'Initiating download...'},
-    {T:'out',v:'Malindu_Atukorala_CV.pdf → ready'},
-    {T:'out',v:'[In a live deployment this would trigger the CV download]'},{T:'blank'},
-  ],
+  resume:()=>{
+    window.open('Malindu_Atukorala_CV.pdf','_blank');
+    return[
+      {T:'blank'},
+      {T:'ok',v:'Initiating download...'},
+      {T:'out',v:'Malindu_Atukorala_CV.pdf → ready'},
+      {T:'blank'},
+    ];
+  },
   tech:()=>[
     {T:'blank'},{T:'info',v:'$ cat tech-stack.txt'},{T:'blank'},
     {T:'kv',k:'Languages',  v:'Java · Python · JavaScript · TypeScript · SQL'},
     {T:'kv',k:'Frontend',   v:'Next.js · React.js · Framer Motion · Webflow · Tailwind CSS'},
     {T:'kv',k:'Backend',    v:'FastAPI · Python'},
     {T:'kv',k:'Databases',  v:'PostgreSQL · Supabase · Qdrant (Vector) · Neo4j (Graph)'},
-    {T:'kv',k:'AI / ML',    v:'Groq · Llama 4 Scout · Hybrid RAG · Semantic Search'},
+    {T:'kv',k:'AI / ML',    v:'Hybrid RAG'},
     {T:'kv',k:'Platforms',  v:'GitHub · Vercel · Render · Railway'},
     {T:'blank'},
   ],
